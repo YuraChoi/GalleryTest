@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -42,12 +43,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getview(int position, View convertView, ViewGroup parent){
+        public View getView(int position, View convertView, ViewGroup parent){
             ImageView imgV=new ImageView(context);
             imgV.setLayoutParams(new Gallery.LayoutParams(100, 150));
             imgV.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imgV.setPadding(5, 5, 5, 5);
             imgV.setImageResource(posterIDs[position]);
+
+            final int pos=position;
+            imgV.setOnTouchListener(new View.OnTouchListener(){
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    imgMain.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    imgMain.setImageResource(posterIDs[pos]);
+                    return false;
+                }
+            });
             return imgV;
         }
 
